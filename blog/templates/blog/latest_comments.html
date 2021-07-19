@@ -1,0 +1,17 @@
+<ul class="list-group-flush latest-comments p-0">
+    {% for com in l_comments %}
+    <li class="list-group-item latest-comments-item">
+        <a class="text-dark" href="{% url 'detail' com.post_id %}">
+            {% if com.body|length > 40 %}
+            {{com.body|slice:'45'}}...
+            {% else %}
+            {{com.body}}
+            {% endif %}
+        </a>
+    </li>
+    <!-- ( empty ) means no comments -->
+    {% empty %}
+    <li class="list-group-item latest-comments-item">لا يوجد تعليقات</li>
+    {% endfor %}
+</ul>
+

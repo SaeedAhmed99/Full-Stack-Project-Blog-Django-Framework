@@ -1,0 +1,14 @@
+{% extends 'blog/base.html' %}
+{% block body %}
+{% load crispy_forms_tags %}
+
+<div class="border p-3 mb-5">
+    <h3 class="border-bottom pb-2 mb-4">تعديل الملف الشخصي</h3>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{user|crispy}}
+        {{image |crispy}}
+        <input class="btn btn-secondary mt-3" type="submit" value="تعديل">
+    </form>
+</div>
+{% endblock %} 

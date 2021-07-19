@@ -1,0 +1,42 @@
+{% extends 'blog/base.html' %}
+{% block body %}
+{% load crispy_forms_tags %}
+<div class="border p-3 mb-3">
+    <img class="img-fluid rounded-circle border m2" src="{{post.author.pofile.image.url}}" alt="foto author" width="60px">
+    <span class="text-secondary">نشر في {{post.post_date|date:'d-m-Y'}}</span>
+
+    {% if post.author == user %}
+    <div class="btn-editing form-group">
+        <a class="btn btn-secondary" href="{% url 'post_update' post.id %}">تحرير</a>
+        <a class="btn btn-danger" href="{% url 'post_delete' post.id %}">حذف</a>
+    </div>
+    {% endif %}
+
+    <h3>{{post.title}}</h3>
+    <p>{{post.content}}</p>
+</div>
+
+<h3 class="border-bottom">التعليقات ({{count}})</h3>
+{% if comments %}
+    {% for comment in comments %}
+        <div class="mb-3 p-3 comment">
+        <h6 class="border-bottom p-2">({{comment.name}})
+            <span class="text-scondary">{{comment.comment_date|date:'d-m-Y'}}</span>
+        </h6>
+        <p class="mb-0">{{comment.body}}</p>
+    </div>
+    {% endfor %}
+{% else %}
+    <div class=" text-center mb-3 p-4 comment">
+        <h5 class="mb-0">لا توجد تعليقات</h5>
+    </div>
+{% endif %}
+<h3 class="border-bottom pb-3 mb-4 mt-5">اضافة تعليق جديد</h3>
+<form method="POST">
+    {% csrf_token %}
+    <div class="border p-3 mb-5">
+    {{newcomment|crispy}}
+    <input class="btn btn-secondary" type="submit" value="نشر التعليق">
+    </div>
+</form>
+{% endblock %} 

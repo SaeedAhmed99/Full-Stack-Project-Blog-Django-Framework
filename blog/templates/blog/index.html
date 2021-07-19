@@ -1,0 +1,21 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% block body %}
+
+{% for message in messages %}
+    <div class="alert alert-{{message.tags}}">
+        {{message}}
+    </div>
+{% endfor %}
+
+{% for post in po %}
+<div class="border p-3 mb-3">
+    <img class="img-fluid rounded-circle border m2" src="{{post.author.pofile.image.url}}"
+    alt="foto author" style="width: 70px; height:70px;">
+    <span class="text-secondary">نشر في {{post.post_date|date:'d-m-Y'}}</span>
+    <h3><a class="text-dark" href="{% url 'detail' post.id %}">{{post.title}}</a></h3>
+    <p>{{post.content}}</p>
+</div>
+{% endfor %}
+{% include 'blog/pagination.html' with page=po %}
+{% endblock %} 

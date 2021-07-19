@@ -1,0 +1,145 @@
+{% load blog_tags %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% if title %}
+    <title>مدونة | {{title}}</title>
+    {% else %}
+    <title>مدونة</title>
+    {% endif %}
+    <link rel="stylesheet" href="{% static 'blog/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'blog/css/main.css' %}">
+    <link rel="shortcut icon" href="{% static 'blog/images/favicon.ico' %}">
+</head>
+<body>
+    <header>
+        <!-- start navbar -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#"> 
+                <img src="{% static 'blog/images/mim-logo.png' %}" alt="logo" width="30px">مدونة</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                <a class="nav-link" href="{% url 'index' %}">الرئيسية <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    دوراتي
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">python language</a>
+                    <a class="dropdown-item" href="#">Django framework</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">information security</a>
+                </div>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'about' %}">من انا</a>
+                    </li>
+            </ul>
+            {% if user.is_authenticated %}
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item"><a class="nav-link" href="{% url 'new_post' %}">تدوينة جديدة</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'profile' %}">الملف الشخصي</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">تسجيل خروج</a></li>
+            </ul>
+            {% else %}
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">نسجيل دخول</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">نسجيل</a></li>
+            </ul>
+            {% endif %}
+            
+            </div>
+        </nav>
+        <!-- end navbar -->
+    </header>
+
+    
+    <section>
+        <div class="container">
+            <div class="row mt-4">
+                <div class="col-md-8">
+                    {% block body %}
+
+                    {% endblock %}
+                </div>
+                <div class="col-md-4">
+                    <div class="card mb-3">
+                        <h3 class="text-center bg-secondary text-light p-2">اخر التدوينات</h3>
+                        {% latest_posts %}
+                    </div>
+                    <div class="card mb-3">
+                        <h3 class="text-center bg-secondary text-light p-2">اخر التعليقات</h3>
+                        {% latest_comments %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+
+    <!-- start footer -->
+    <footer class="bg-secondary">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md">
+                    <div class="card-group mt-3">
+                        <div class="card m-3">
+                            <h3 class="card-title text-center border-bottom p-2 m-3">من أنا</h3>
+                            <div class="card-body">
+                                <div class="text-center">
+                                    <img src="{% static 'blog/images/mim-logo.png' %}" alt="logo" width="80px">
+                                </div>
+                                الاسم : سعيد احمد الحلاق<br>
+                                التخصص : هندسة برمجيات
+                            </div>
+                        </div>
+                        <div class="card m-3">
+                            <h3 class="card-title text-center border-bottom p-2 m-3">مواقع هامة</h3>
+                            <div class="card-body">
+                                <ul>
+                                    <li><a href="#">الموقع الاول</a></li>
+                                    <li><a href="#">الموقع الثاني</a></li>
+                                    <li><a href="#">الموقع الثالث</a></li>
+                                    <li><a href="#">الموقع الرابع</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card m-3">
+                            <h3 class="card-title text-center border-bottom p-2 m-3">مواقع التواصل الاجتماعي</h3>
+                            <div class="card-body">
+                                <h4 class="text-center">
+                                    <a class="text-scondary" href="https://www.facebook.com/"><i class="fab fa-facebook"></i></a>
+                                    <a class="text-scondary"><i class="fab fa-twitter"></i></a>
+                                    <a class="text-scondary"><i class="fab fa-instagram"></i></a>
+                                    <a class="text-scondary"><i class="fab fa-telegram"></i></a>
+                                    <a class="text-scondary"><i class="fab fa-linkedin"></i></a>
+                                    <a class="text-scondary"><i class="fab fa-youtube"></i></a>
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row p-2">
+                <div class="col-md text-center">
+                    <small class="text-light">&copy; جميع الحقوق محفوظة</small>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- end footer -->
+    
+    <script src="{% static 'blog/js/jquery-3.5.1.slim.min.js' %}"></script>
+    <script src="{% static 'blog/js/popper.min.js' %}"></script>
+    <script src="{% static 'blog/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'blog/js/fontawesome-all.min.js' %}"></script>
+</body>
+</html>
